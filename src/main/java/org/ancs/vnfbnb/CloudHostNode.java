@@ -8,8 +8,13 @@ public class CloudHostNode extends HostNode {
 
     @Override
     public double getCost(Instance instance) {
-        // TODO Auto-generated method stub
-        return 0;
+        double cost = 0;
+        Flavor instanceFlavor = instance.getFlavor();
+        cost += Constants.CLOUD_CPU_COST_COEFFICIENT * instanceFlavor.getCpuNeed() / getRemainingCpuCapacity();
+        cost += Constants.CLOUD_MEMORY_COST_COEFFICIENT * instanceFlavor.getMemoryNeed() / getRemainingMemoryCapacity();
+        cost += Constants.CLOUD_EDGE_LINK_BW_COST_COEFFICIENT * instanceFlavor.getBandwidthNeed()
+                / getRemainingBandwidthCapacity();
+        return cost;
     }
 
     @Override

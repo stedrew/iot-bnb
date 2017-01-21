@@ -4,6 +4,7 @@ public class Instance {
 
     private String name;
     private Flavor flavor;
+    private BnbHostNode ownerNode;
 
     public String getName() {
         return name;
@@ -19,6 +20,14 @@ public class Instance {
 
     public void setFlavor(Flavor flavor) {
         this.flavor = flavor;
+    }
+
+    public BnbHostNode getOwnerNode() {
+        return ownerNode;
+    }
+
+    public void setOwnerNode(BnbHostNode ownerNode) {
+        this.ownerNode = ownerNode;
     }
 
     public String toString() {

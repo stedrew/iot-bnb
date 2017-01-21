@@ -6,8 +6,14 @@ public class BnbHostNode extends HostNode {
     private static Logger log = Logger.getLogger(BnbHostNode.class);
     @Override
     public double getCost(Instance instance) {
-        // TODO Auto-generated method stub
-        return 0;
+        int cost = 0;
+        if (instance.getOwnerNode().equals(this)) {
+            Flavor instanceFlavor = instance.getFlavor();
+            cost += this.getCpuUnitPrice() * instanceFlavor.getCpuNeed();
+            cost += this.getMemoryUnitPrice() * instanceFlavor.getMemoryNeed();
+            cost += this.getBandwidthUnitPrice() * instanceFlavor.getBandwidthNeed();
+        }
+        return cost;
     }
 
     @Override

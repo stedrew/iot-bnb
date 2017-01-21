@@ -135,7 +135,24 @@ public abstract class HostNode {
         return remainingBandwidthCapacity;
     }
 
+    @Override
     public String toString() {
-        return "[" + getClass().getSimpleName() + " name: " + name + "]";
+        return "[" + getClass().getSimpleName() + " name: " + name + ". Resource capacities: " + cpuCapacity + ", "
+                + memoryCapacity + ", " + bandwidthCapacity + ". Unit prices: " + cpuUnitPrice + ", " + memoryUnitPrice
+                + ", " + bandwidthUnitPrice + "]";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof HostNode) {
+            HostNode node = (HostNode) obj;
+            return node.getName().equals(getName());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return getName().hashCode();
     }
 }
