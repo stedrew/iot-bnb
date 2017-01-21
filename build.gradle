@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+version = '1.0'
+mainClassName = "org.ancs.vnfbnb.VnfBnbSystem"
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'VNF-B&B',
+                   'Implementation-Version': version
+    }
+}
+
+dependencies {
+  compile 'log4j:log4j:1.2.17'
+}
