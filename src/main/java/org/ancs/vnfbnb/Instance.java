@@ -31,6 +31,6 @@ public class Instance {
     }
 
     public String toString() {
-        return "[Instance name: " + name + ", flavor: " + flavor + "]";
+        return "[name: " + name + ", flavor: " + flavor + ", owner: " + ownerNode.getName() + "]";
     }
 }

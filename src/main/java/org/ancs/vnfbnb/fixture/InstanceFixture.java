@@ -33,7 +33,7 @@ public class InstanceFixture {
                 }
                 instance.setOwnerNode((BnbHostNode) owner);
                 instanceList.add(instance);
-                log.info("Instance added: " + instance);
+                log.debug("Instance added: " + instance);
             }
         } catch (IOException e) {
             log.error("Error reading instances to deploy file: " + INSTANCES_TO_DEPLOY_FILE, e);
@@ -42,7 +42,7 @@ public class InstanceFixture {
         return instanceList;
     }
 
-    private static Instance createInstance(String name, String flavorName) {
+    public static Instance createInstance(String name, String flavorName) {
         Instance instance = new Instance();
         instance.setName(name);
         instance.setFlavor(Flavor.valueOf(flavorName));

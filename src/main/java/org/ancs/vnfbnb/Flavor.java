@@ -58,11 +58,6 @@ public enum Flavor {
     }
 
     public String toString() {
-        return "{Flavor name: " + name()
-                + ", CPU need: " + cpuNeed 
-                + ", memory need: " + memoryNeed 
-                + ", bandwidthNeed: " + bandwidthNeed 
-                + ", max delay allowed: " + maxDelay 
-                + "}";
+        return "{" + name() + "}";
     }
 }

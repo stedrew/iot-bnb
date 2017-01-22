@@ -5,15 +5,16 @@ import java.util.List;
 
 public abstract class HostNode {
     protected String name;
-    protected int cpuCapacity;
-    protected int memoryCapacity;
-    protected int bandwidthCapacity;
-    protected int cpuUnitPrice;
-    protected int memoryUnitPrice;
-    protected int bandwidthUnitPrice;
+    protected double cpuCapacity;
+    protected double memoryCapacity;
+    protected double bandwidthCapacity;
+    protected double cpuUnitPrice;
+    protected double memoryUnitPrice;
+    protected double bandwidthUnitPrice;
     protected int x;
     protected int y;
     protected List<Instance> instanceList = new ArrayList<>();
+    protected double lastCost;
 
     public String getName() {
         return name;
@@ -23,51 +24,51 @@ public abstract class HostNode {
         this.name = name;
     }
 
-    public int getCpuCapacity() {
+    public double getCpuCapacity() {
         return cpuCapacity;
     }
 
-    public void setCpuCapacity(int cpuCapacity) {
+    public void setCpuCapacity(double cpuCapacity) {
         this.cpuCapacity = cpuCapacity;
     }
 
-    public int getMemoryCapacity() {
+    public double getMemoryCapacity() {
         return memoryCapacity;
     }
 
-    public void setMemoryCapacity(int memoryCapacity) {
+    public void setMemoryCapacity(double memoryCapacity) {
         this.memoryCapacity = memoryCapacity;
     }
 
-    public int getBandwidthCapacity() {
+    public double getBandwidthCapacity() {
         return bandwidthCapacity;
     }
 
-    public void setBandwidthCapacity(int bandwidthCapacity) {
+    public void setBandwidthCapacity(double bandwidthCapacity) {
         this.bandwidthCapacity = bandwidthCapacity;
     }
 
-    public int getCpuUnitPrice() {
+    public double getCpuUnitPrice() {
         return cpuUnitPrice;
     }
 
-    public void setCpuUnitPrice(int cpuUnitPrice) {
+    public void setCpuUnitPrice(double cpuUnitPrice) {
         this.cpuUnitPrice = cpuUnitPrice;
     }
 
-    public int getMemoryUnitPrice() {
+    public double getMemoryUnitPrice() {
         return memoryUnitPrice;
     }
 
-    public void setMemoryUnitPrice(int memoryUnitPrice) {
+    public void setMemoryUnitPrice(double memoryUnitPrice) {
         this.memoryUnitPrice = memoryUnitPrice;
     }
 
-    public int getBandwidthUnitPrice() {
+    public double getBandwidthUnitPrice() {
         return bandwidthUnitPrice;
     }
 
-    public void setBandwidthUnitPrice(int bandwidthUnitPrice) {
+    public void setBandwidthUnitPrice(double bandwidthUnitPrice) {
         this.bandwidthUnitPrice = bandwidthUnitPrice;
     }
 
@@ -87,8 +88,13 @@ public abstract class HostNode {
         this.y = y;
     }
 
-    public void deployInstance(Instance instance) {
+    public void deployInstance(Instance instance, double cost) {
         this.instanceList.add(instance);
+        this.lastCost = cost;
+    }
+
+    public double getLastCost() {
+        return lastCost;
     }
 
     /**
@@ -107,28 +113,28 @@ public abstract class HostNode {
      *            Instance to deploy
      * @return Delay
      */
-    public abstract int getDelay(Instance instance);
+    public abstract double getDelay(Instance instance);
 
     public abstract boolean isResourceEnough(Instance instance);
 
-    public int getRemainingCpuCapacity() {
-        int remainingCpuCapacity = this.getCpuCapacity();
+    public double getRemainingCpuCapacity() {
+        double remainingCpuCapacity = this.getCpuCapacity();
         for (Instance instance : instanceList) {
             remainingCpuCapacity -= instance.getFlavor().getCpuNeed();
         }
         return remainingCpuCapacity;
     }
 
-    public int getRemainingMemoryCapacity() {
-        int remainingMemoryCapacity = this.getMemoryCapacity();
+    public double getRemainingMemoryCapacity() {
+        double remainingMemoryCapacity = this.getMemoryCapacity();
         for (Instance instance : instanceList) {
             remainingMemoryCapacity -= instance.getFlavor().getMemoryNeed();
         }
         return remainingMemoryCapacity;
     }
 
-    public int getRemainingBandwidthCapacity() {
-        int remainingBandwidthCapacity = this.getBandwidthCapacity();
+    public double getRemainingBandwidthCapacity() {
+        double remainingBandwidthCapacity = this.getBandwidthCapacity();
         for (Instance instance : instanceList) {
             remainingBandwidthCapacity -= instance.getFlavor().getBandwidthNeed();
         }

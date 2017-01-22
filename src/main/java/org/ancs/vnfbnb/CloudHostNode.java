@@ -14,11 +14,12 @@ public class CloudHostNode extends HostNode {
         cost += Constants.CLOUD_MEMORY_COST_COEFFICIENT * instanceFlavor.getMemoryNeed() / getRemainingMemoryCapacity();
         cost += Constants.CLOUD_EDGE_LINK_BW_COST_COEFFICIENT * instanceFlavor.getBandwidthNeed()
                 / getRemainingBandwidthCapacity();
+        log.debug("Cost of [" + name + "] for instance " + instance + " is :" + cost);
         return cost;
     }
 
     @Override
-    public int getDelay(Instance instance) {
+    public double getDelay(Instance instance) {
         return Constants.CLOUD_DELAY_FROM_OUT_OF_EDGE 
                 / (getRemainingBandwidthCapacity() + Constants.CLOUD_DELAY_FACTOR);
     }
@@ -28,11 +29,11 @@ public class CloudHostNode extends HostNode {
         Flavor instanceFlavor = instance.getFlavor();
         boolean bandwidthEnough = instanceFlavor.getBandwidthNeed() < getRemainingBandwidthCapacity();
         if(!bandwidthEnough) {
-            log.error("Cloud Bandwidth not enough for instance: " + instance);
+            log.debug("Cloud Bandwidth not enough for instance: " + instance);
         }
         boolean delayAllowed = getDelay(instance) < instanceFlavor.getMaxDelay();
         if (!delayAllowed) {
-            log.error("Cloud delay too long for instance: " + instance);
+            log.debug("Cloud delay too long for instance: " + instance);
         }
         return bandwidthEnough && delayAllowed;
     }

@@ -37,7 +37,7 @@ public class HostNodeFixture {
                     int unitPrice = Constants.NUM_RESOURCE_LEVELS + 1 - resourceLevel;
                     BnbHostNode node = createBnbHostNode(nodeName, resourceLevel, unitPrice, x, y);
                     hostNodeMap.put(nodeName, node);
-                    log.info("BnB node added: " + node);
+                    log.debug("BnB node added: " + node);
                 }
             }
             x -= 1;
@@ -45,7 +45,7 @@ public class HostNodeFixture {
             String cloudName = "CLOUD_" + x + "_" + y;
             CloudHostNode cloud = createCloudHostNode(cloudName, x, y);
             hostNodeMap.put(cloudName, cloud);
-            log.info("Cloud node added: " + cloud);
+            log.debug("Cloud node added: " + cloud);
         } catch (IOException e) {
             log.error("Error reading host node scenario file: " + HOST_NODE_SCENARIO_FILE, e);
             return null;
@@ -53,7 +53,7 @@ public class HostNodeFixture {
         return hostNodeMap;
     }
 
-    private static BnbHostNode createBnbHostNode(String name, int resourceLevel, int unitPrice, int x, int y) {
+    public static BnbHostNode createBnbHostNode(String name, int resourceLevel, int unitPrice, int x, int y) {
         BnbHostNode bnb = new BnbHostNode();
         bnb.setName(name);
         bnb.setCpuCapacity(resourceLevel);
@@ -67,11 +67,11 @@ public class HostNodeFixture {
         return bnb;
     }
 
-    private static CloudHostNode createCloudHostNode(String name, int x, int y) {
+    public static CloudHostNode createCloudHostNode(String name, int x, int y) {
         CloudHostNode cloud = new CloudHostNode();
         cloud.setName(name);
-        cloud.setCpuCapacity(Integer.MAX_VALUE);
-        cloud.setMemoryCapacity(Integer.MAX_VALUE);
+        cloud.setCpuCapacity(2000);
+        cloud.setMemoryCapacity(2000);
         cloud.setBandwidthCapacity(200);
         cloud.setX(x);
         cloud.setY(y);

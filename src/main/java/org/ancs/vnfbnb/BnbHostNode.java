@@ -7,17 +7,18 @@ public class BnbHostNode extends HostNode {
     @Override
     public double getCost(Instance instance) {
         int cost = 0;
-        if (instance.getOwnerNode().equals(this)) {
+        if (!instance.getOwnerNode().equals(this)) {
             Flavor instanceFlavor = instance.getFlavor();
             cost += this.getCpuUnitPrice() * instanceFlavor.getCpuNeed();
             cost += this.getMemoryUnitPrice() * instanceFlavor.getMemoryNeed();
             cost += this.getBandwidthUnitPrice() * instanceFlavor.getBandwidthNeed();
         }
+        log.debug("Cost of [" + name + "] for instance " + instance + " is :" + cost);
         return cost;
     }
 
     @Override
-    public int getDelay(Instance instance) {
+    public double getDelay(Instance instance) {
         return 0;
     }
 
@@ -26,15 +27,15 @@ public class BnbHostNode extends HostNode {
         Flavor instanceFlavor = instance.getFlavor();
         boolean cpuEnough = instanceFlavor.getCpuNeed() < getRemainingCpuCapacity();
         if (!cpuEnough) {
-            log.error("Bnb node [" + name + "]: CPU not enough for instance: " + instance);
+            log.debug("Bnb node [" + name + "]: CPU not enough for instance: " + instance);
         }
         boolean memoryEnough = instanceFlavor.getMemoryNeed() < getRemainingMemoryCapacity();
         if (!memoryEnough) {
-            log.error("Bnb node [" + name + "]: memory not enough for instance: " + instance);
+            log.debug("Bnb node [" + name + "]: memory not enough for instance: " + instance);
         }
         boolean bandwidthEnough = instanceFlavor.getBandwidthNeed() < getRemainingBandwidthCapacity();
         if (!bandwidthEnough) {
-            log.error("Bnb node [" + name + "]: bandwidth not enough for instance: " + instance);
+            log.debug("Bnb node [" + name + "]: bandwidth not enough for instance: " + instance);
         }
         return cpuEnough && memoryEnough && bandwidthEnough;
     }
